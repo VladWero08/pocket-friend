@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken";
 
 export const registerUsers = async (req, res) => {
     try {
-        const {username, email, password} = req.body;
+        const {username, email, password, age} = req.body;
 
         const existingEmail = await db('users')
                             .where({ email })
@@ -17,14 +17,15 @@ export const registerUsers = async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        await db('users')
-                .insert({
-                    username,
-                    email,
-                    password: hashedPassword
-                })
-        
+        const user = {
+            username,
+            email,
+            password: hashedPassword,
+            age
+        }
 
+        await db('users').insert(user)
+        
         const [newUser] = await db('users')
                     .select('id', 'username', 'email')
                     .where({ email });
