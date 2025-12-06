@@ -32,7 +32,7 @@ export const setUserPersonality = async (req, res, next) => {
             .where({ id: user_id })
             .update({ personality_id });
 
-        const { personality } = await db('personality')
+        const { name: personality } = await db('personality')
             .where({ id: personality_id })
             .first('name');
 
