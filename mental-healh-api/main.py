@@ -2,9 +2,11 @@ import logging
 import os
 
 from contextlib import asynccontextmanager
+from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 
 from base_models import *
+from chatbot.chatbot import Chatbot
 from classifier.classifier import MentalHealthClassifier
 from summarizer.summarizer import MentalHealthSummarizer
 
@@ -14,10 +16,14 @@ os.environ["HF_HUB_DISABLE_SYMLINKS_WARNING"] = "1"
 logger = None
 mhs = None
 mhc = None
+chatbot = None
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    global logger, mhs, mhc
+    global logger, mhs, mhc, chatbot
+
+    # load the environment variables
+    load_dotenv()
 
     # create the logger
     logger = logging.getLogger("mental-health-api")
@@ -30,6 +36,10 @@ async def lifespan(app: FastAPI):
     # load the classifier model
     logger.info("Loading the classifier...")
     mhc = MentalHealthClassifier()
+
+    # load the chatbot model
+    logger.info("Loading the chatbot...")
+    chatbot = Chatbot()
 
     yield
     
@@ -65,4 +75,12 @@ def predict(request: Conversation):
     
     return {"diseases": diseases}
 
-    
+@app.post("/talk")
+def talk(request: HumanMessage):   
+    # inference from the OpenAI API
+    try:
+        response = chatbot.talk(request.message)
+        return {"message": response}
+    except Exception as e:
+        logger.error(f"Failed to retrieve message from OpenAI API.")
+        raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")

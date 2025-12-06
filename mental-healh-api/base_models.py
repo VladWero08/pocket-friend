@@ -7,3 +7,6 @@ class Message(BaseModel):
 
 class Conversation(BaseModel):
     messages: List[Message]
+
+class HumanMessage(BaseModel):
+    message: str
