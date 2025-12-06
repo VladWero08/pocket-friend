@@ -55,15 +55,16 @@ export const warningForUsers = async () => {
 
     for (let [key, value] of Object.entries(messagesPerUser)) {
       const messages = JSON.parse(value).slice(-10);
-      const response = await fetch('http://10.200.23.107:8000/predict', {
+      const response = await fetch('http://localhost:8000/predict', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({ messages })
       });
-      console.log({response})
-      for (let disease of response.diseases) {
+      const data = await response.json();
+      console.log({data})
+      for (let disease of data.diseases) {
         if (warnings.has(disease)) {
           const user_warnings = {
             user_id: key,

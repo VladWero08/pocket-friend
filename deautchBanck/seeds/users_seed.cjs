@@ -254,22 +254,22 @@ exports.seed = async function (knex) {
   await knex("warnings").insert([
     {
       id: 1,
-      name: "anxietate",
+      name: "anxiety",
       message: "Ai anxietate!",
     },
     {
       id: 2,
-      name: "depresie",
+      name: "depression",
       message: "Ai depresie!",
     },
     {
       id: 3,
-      name: "stres",
+      name: "stress",
       message: "Ai stres!",
     },
     {
       id: 4,
-      name: "neutru",
+      name: "neutral",
       message: "Ești neutru!",
     },
   ]);

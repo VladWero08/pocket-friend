@@ -13,7 +13,7 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-cron.schedule('* * * * * *', async () => {
+cron.schedule('* * * * *', async () => {
   console.log('Cron running...');
   await warningForUsers();
 });

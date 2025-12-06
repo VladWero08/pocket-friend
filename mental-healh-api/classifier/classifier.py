@@ -47,9 +47,9 @@ class MentalHealthClassifier():
     # Case 2: if any active class has the logit > .75
     if torch.any(predictions[1:] > 0.75):
       active_classes = torch.where(predictions[1:] > 0.75)[0]
-    
-    # Case 3: if the sum of the active classes > .33 sum up to a value > .75
-    if torch.sum(predictions[torch.where(predictions > 0.33)[0]]) > 0.75:
-      active_classes = torch.where(predictions > 0.33)[0]
+      self._class_to_label(active_classes)
 
-    return self._class_to_label(active_classes)
+    # Case 3: if the sum of the active classes > .33 sum up to a value > .75
+    if torch.sum(predictions[torch.where(predictions[1:] > 0.33)[0]]) > 0.75:
+      active_classes = torch.where(predictions[1:] > 0.33)[0]
+      return self._class_to_label(active_classes)
