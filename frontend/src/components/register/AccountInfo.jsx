@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import "./AccountInfo.scss";
 
 function AccountInfo({ onNext }) {
@@ -87,6 +88,13 @@ function AccountInfo({ onNext }) {
         >
           NEXT
         </button>
+
+        <p className="log-in-prompt">
+          Already owning a pet?{" "}
+          <Link to="/log-in" className="log-in-link">
+            Log in and say hello.
+          </Link>
+        </p>
       </div>
     </div>
   );

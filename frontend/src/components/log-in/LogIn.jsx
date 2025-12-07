@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import "./LogIn.scss";
 
 function LogIn() {
@@ -21,7 +22,7 @@ function LogIn() {
 
   const handleSubmit = () => {
     if (formData.email && formData.password) {
-      onLogin && onLogin(formData);
+      handleOnLogin();
     }
   };
 
@@ -74,6 +75,13 @@ function LogIn() {
         >
           LOG IN
         </button>
+
+        <p className="register-prompt">
+          Don't have a pet yet?{" "}
+          <Link to="/register" className="register-link">
+            Register one here.
+          </Link>
+        </p>
       </div>
     </div>
   );

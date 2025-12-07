@@ -118,6 +118,27 @@
   }
 }
 
+.log-in-prompt {
+  font-family: $font-primary;
+  font-size: 10px;
+  color: $color-text-muted;
+  margin-top: 24px;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+.log-in-link {
+  color: $color-primary-purple;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    color: $color-primary-purple-dark;
+    text-shadow: 0 0 8px rgba(217, 70, 239, 0.6);
+  }
+}
+
 // Responsive
 @media (max-width: 640px) {
   .step1-title { font-size: $font-size-xl; }

@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { Link } from "react-router-dom";
 import "./WelcomePage.scss";
-// Asigură-te că imaginea este în acest folder sau modifică calea
+
 import eggImage from "../../assets/egg-welcome.png"; 
 
 function WelcomePage({ onStart, onLogin }) {
@@ -15,13 +15,17 @@ function WelcomePage({ onStart, onLogin }) {
         </div>
 
         <div className="button-group">
-          <button className="btn-primary" onClick={onStart}>
-            START
-          </button>
+          <Link to="/register">
+            <button className="btn-primary" onClick={onStart}>
+              START
+            </button>
+          </Link>
           
-          <button className="btn-secondary" onClick={onLogin}>
-            LOG IN
-          </button>
+          <Link to="/log-in">
+            <button className="btn-secondary" onClick={onLogin}>
+              LOG IN
+            </button>
+          </Link>
         </div>
       </div>
     </div>
