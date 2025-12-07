@@ -25,12 +25,27 @@ export const authenticateToken = (req, res, next) => {
 };
 
 export const getAiResponse = async (message) => {
-  const result = [
-    { type: 'user', content: message },
-    { type: 'bot', content: 'chatGpt' }
-  ]
+  try {
+    const response = await fetch('http://localhost:8000/talk', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ 
+          "message": message
+         })
+      });
+      const data = await response.json();
 
-  return result;
+      const chat = [
+        { type: 'user', content: message },
+        { type: 'bot', content: data.message }
+      ]
+      return chat
+  } catch (error) {
+    console.error(error);
+    return
+  }
 }
 
 export const warningForUsers = async () => {
