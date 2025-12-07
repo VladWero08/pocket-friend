@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../navigation/Navbar";
 import { useSpeechSynthesis, useSpeechRecognition } from 'react-speech-kit';
 import { getUserPersonality, getChatMessages, sendMessage } from "../../api";
+import CatActions from "./CatActions";
 
-import cat from "../../assets/cat.png" 
 import feed from "../../assets/ramen.svg"
 import drink from "../../assets/sparkling-drink.svg"
 import sleep from "../../assets/bed.svg"
@@ -79,14 +79,14 @@ const Home = () => {
                     } else {
                         // Set default welcome message if no chat exists
                         setMessages([
-                            { id: 1, text: "Hello, I'm your pocket friend nice meeting you", sender: 'bot' }
+                            { id: 1, text: "Hello, I'm your pocket friend, nice meeting you.", sender: 'bot' }
                         ]);
                     }
                 } catch (error) {
                     console.error('Error fetching chat messages:', error);
                     // Set default welcome message if no chat exists
                     setMessages([
-                        { id: 1, text: "Hello, I'm your pocket friend nice meeting you", sender: 'bot' }
+                        { id: 1, text: "Hello, I'm your pocket friend nice meeting you.", sender: 'bot' }
                     ]);
                 } finally {
                     setIsLoadingMessages(false);
@@ -112,10 +112,6 @@ const Home = () => {
         { id: 'play', icon: play, label: 'PLAY' },
         { id: 'wash', icon: wash, label: 'WASH' }
     ];
-
-    const handleAction = (actionId) => {
-        console.log(`Action: ${actionId}`);
-    };
 
     const handleSpeak = (message) => {
         speak({ text: message });
@@ -176,27 +172,7 @@ const Home = () => {
             <div className="cat-page">
                 <Navbar petName={personality ? `${personality} CAT` : 'LOADING...'} />
                 <div className="cat-content">
-                    {/* Cat Display Area */}
-                    <div className="cat-display">
-                        <div className="cat-sprite">
-                            <img src={cat} alt="cat"></img>
-                        </div>
-
-                        {/* Action Buttons */}
-                        <div className="action-buttons">
-                            {actions.map((action) => (
-                                <button
-                                    key={action.id}
-                                    className="action-btn"
-                                    onClick={() => handleAction(action.id)}
-                                >
-                                    <img className="action-icon" src={action.icon} alt="action"></img> 
-                                    <span className="action-label">{action.label}</span>
-                                </button>
-                            ))}
-                        </div>
-                    </div>
-
+                    <CatActions/>
 
                     {/* Chat Input */}
                     <div className="chat-section">
