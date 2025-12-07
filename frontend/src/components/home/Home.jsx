@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../navigation/Navbar";
+import MentalHealthPopup from "../pop-up/PopUp";
 import { useSpeechSynthesis, useSpeechRecognition } from 'react-speech-kit';
-import { getUserPersonality, getChatMessages, sendMessage } from "../../api";
+import { getUserPersonality, getChatMessages, sendMessage, getUserWarnings } from "../../api";
 import CatActions from "./CatActions";
 
 import feed from "../../assets/ramen.svg"
@@ -21,6 +22,8 @@ const Home = () => {
     const [personality, setPersonality] = useState('');
     const [userId, setUserId] = useState(null);
     const [isLoadingMessages, setIsLoadingMessages] = useState(true);
+    const [warnings, setWarnings] = useState([]);
+    const [showWarningPopup, setShowWarningPopup] = useState(false);
     const navigate = useNavigate();
 
     const { listen, listening, stop } = useSpeechRecognition({
@@ -105,6 +108,34 @@ const Home = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [messages]);
 
+    // Poll warnings every 5 seconds
+    useEffect(() => {
+        if (!userId) return;
+
+        const fetchWarnings = async () => {
+            try {
+                const response = await getUserWarnings(userId);
+                if (response.success && response.data && response.data.length > 0) {
+                    setWarnings(response.data);
+                } else {
+                    setWarnings([]);
+                }
+            } catch (error) {
+                console.error('Error fetching warnings:', error);
+                setWarnings([]);
+            }
+        };
+
+        // Fetch immediately
+        fetchWarnings();
+
+        // Set up polling every 5 seconds
+        const intervalId = setInterval(fetchWarnings, 5000);
+
+        // Cleanup on unmount
+        return () => clearInterval(intervalId);
+    }, [userId]);
+
     const actions = [
         { id: 'feed', icon: feed, label: 'FEED' },
         { id: 'drink', icon: drink, label: 'DRINK' },
@@ -169,8 +200,23 @@ const Home = () => {
 
     return (
         <>
+            {showWarningPopup && (
+                <MentalHealthPopup onClose={() => setShowWarningPopup(false)} />
+            )}
+            
             <div className="cat-page">
                 <Navbar petName={personality ? `${personality} CAT` : 'LOADING...'} />
+                
+                {/* Warning Button */}
+                {warnings.length > 0 && (
+                    <button 
+                        className="warning-button"
+                        onClick={() => setShowWarningPopup(true)}
+                        title={`${warnings.length} warning${warnings.length > 1 ? 's' : ''}`}
+                    >
+                    </button>
+                )}
+                
                 <div className="cat-content">
                     <CatActions/>
 
