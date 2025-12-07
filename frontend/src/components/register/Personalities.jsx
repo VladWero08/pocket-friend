@@ -100,7 +100,7 @@ function Personalities({ onNext }) {
 
             if (response.success) {
                 // Navigate to home
-                navigate('/home');
+                navigate('/egg-crack');
             } else {
                 setError(response.message || "Failed to set personality");
             }

@@ -36,7 +36,7 @@ function LogIn() {
         
         if (personalityResponse.success && personalityResponse.data) {
           // User has personality, redirect to home
-          navigate('/home');
+          navigate('/egg-crack');
         } else {
           // User doesn't have personality, redirect to personality selection
           navigate('/personality');

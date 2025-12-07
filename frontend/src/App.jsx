@@ -2,6 +2,7 @@ import './App.css'
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 
 import WelcomePage from './components/welcome/WelcomePage'
+import WelcomeEggPop from './components/welcome/WelcomeEggPop';
 import Home from './components/home/Home'
 import Registration from './components/register/Registration';
 import LogIn from './components/log-in/LogIn';
@@ -13,6 +14,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route index element={<WelcomePage/>}/>
+          <Route path="/egg-crack" element={<WelcomeEggPop/>}/>
           <Route path="/register" element={<Registration/>}/>
           <Route path="/log-in" element={<LogIn/>}/>
           <Route path="/personality" element={<Personalities/>}/>
