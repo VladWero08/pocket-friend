@@ -6,7 +6,7 @@ const Navbar = ({ petName = "CAT" }) => {
       <div className="nav-content">
         <div className="pet-info">
             {/* LOGO */}
-            <span className="pet-icon">🐾</span>
+            <span className="pet-icon">POCKET FRIEND</span>
         </div>
         <div className="pet-name">
           {petName}

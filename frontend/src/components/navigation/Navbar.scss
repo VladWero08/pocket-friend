@@ -24,12 +24,12 @@
 }
 
 .pet-icon {
-  font-size: 24px;
+  font-size: $font-size-md;
 }
 
 .pet-name {
   font-family: $font-primary;
-  font-size: 16px;
+  font-size: $font-size-md;
   color: $color-text-primary;
   margin: 0;
   letter-spacing: 2px;
@@ -49,7 +49,7 @@
 }
 
 @media (max-width: 640px) {
-  .pet-name, .rename-btn {
-    font-size: $font-size-base;
+  .pet-icon, .pet-name, .rename-btn {
+    font-size: 12px;
   }
 }

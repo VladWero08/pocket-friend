@@ -52,7 +52,7 @@ function WelcomeEggPop() {
   return (
     <div className="welcome-container">
       <div className="welcome-content">
-        <h1 className="game-title">GAME NAME</h1>
+        <h1 className="game-title">POCKET FRIEND</h1>
 
         {/* OU ANIMAT CU CSS TRANSITIONS */}
         <div className="egg-display">

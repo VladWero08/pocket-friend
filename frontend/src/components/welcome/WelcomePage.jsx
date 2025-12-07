@@ -7,8 +7,8 @@ function WelcomePage({ onStart, onLogin }) {
   return (
     <div className="welcome-container">
       <div className="welcome-content">
-        <h1 className="game-title">GAME NAME</h1>
-        <p className="game-subtitle">Body text here</p>
+        <h1 className="game-title">POCKET FRIEND</h1>
+        <p className="game-subtitle">Meet your new companion</p>
 
         <div className="egg-display">
           <img src={eggImage} alt="Mystery Egg" className="floating-egg" />
