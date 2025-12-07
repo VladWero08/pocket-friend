@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import Navbar from "../navigation/Navbar";
+import { useSpeechSynthesis, useSpeechRecognition } from 'react-speech-kit';
 
 import cat from "../../assets/cat.png" 
 import feed from "../../assets/ramen.svg"
@@ -13,6 +14,15 @@ import botMic from "../../assets/bot-mic.svg"
 import "./Home.scss";
 
 const Home = () => {
+    const { speak, cancel, speaking } = useSpeechSynthesis();
+    const [inputValue, setInputValue] = useState('');
+
+    const { listen, listening, stop } = useSpeechRecognition({
+        onResult: (result) => {
+            setInputValue(result);
+        },
+    });
+
     const [messages, setMessages] = useState([
         { id: 1, text: "HEY! I'M YOUR CAT COMPANION. LET'S CHAT!", sender: 'bot' },
         { id: 2, text: "Hello! How are you?", sender: 'user' },
@@ -35,6 +45,40 @@ const Home = () => {
     const handleAction = (actionId) => {
         console.log(`Action: ${actionId}`);
     };
+
+    const handleSpeak = (message) => {
+        speak({ text: message });
+    }
+
+    const handleTalk = () => {
+        if (listening) {
+            stop();
+        } else {
+            listen();
+        }
+    }
+
+    const handleSendMessage = () => {
+        if (inputValue.trim()) {
+            const newMessage = {
+                id: Date.now(),
+                text: inputValue,
+                sender: 'user'
+            };
+            setMessages([...messages, newMessage]);
+            setInputValue('');
+            
+            // Simulate bot response
+            setTimeout(() => {
+                const botResponse = {
+                    id: Date.now() + 1,
+                    text: "Thanks for your message!",
+                    sender: 'bot'
+                };
+                setMessages(prev => [...prev, botResponse]);
+            }, 1000);
+        }
+    }
 
     return (
         <>
@@ -75,7 +119,7 @@ const Home = () => {
                                         <p>{message.text}</p>
                                     </div>
                                     {message.sender === 'bot' && (
-                                        <button className="sound-btn">
+                                        <button className="sound-btn" onClick={() => handleSpeak(message.text)}>
                                             <img src={botMic} alt="bot-mic" />
                                         </button>
                                     )}
@@ -86,20 +130,24 @@ const Home = () => {
                         
                         <div className="chat-input-container">
                             <input
-                            type="text"
-                            className="chat-input"
-                            placeholder="TYPE MESSAGE..."
-                            onKeyPress={(e) => {
-                                if (e.key === 'Enter') {
-                                handleSendMessage(e.target.value);
-                                e.target.value = '';
-                                }
-                            }}
+                                type="text"
+                                className="chat-input"
+                                placeholder="TYPE MESSAGE..."
+                                value={inputValue}
+                                onChange={(e) => setInputValue(e.target.value)}
+                                onKeyPress={(e) => {
+                                    if (e.key === 'Enter') {
+                                        handleSendMessage();
+                                    }
+                                }}
                             />
-                            <button className="voice-btn">
+                            <button 
+                                className={`voice-btn ${listening ? 'listening' : ''}`}
+                                onClick={handleTalk}
+                            >
                                 <img src={userMic} alt="mic" />
                             </button>
-                            <button className="send-btn">
+                            <button className="send-btn" onClick={handleSendMessage}>
                                 <img src={send} alt="send"></img>
                             </button>
                         </div>

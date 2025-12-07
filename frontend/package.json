@@ -12,7 +12,9 @@
   "dependencies": {
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "react-router-dom": "^7.10.1"
+    "react-router-dom": "^7.10.1",
+    "react-speech-kit": "^3.0.1",
+    "text-to-speech-js": "^1.1.11"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

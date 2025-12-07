@@ -227,15 +227,24 @@
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
-  justify-content: center;
-  
-  &:hover {
-    box-shadow: $shadow-glow-purple;
-    transform: translateY(-2px);
-  }
+  justify-content: center;  
 }
 .voice-btn { border: 2px solid $color-primary-purple; }
 .send-btn { border: 2px solid $color-border-teal; }
+
+.voice-btn.listening {
+  background: $color-primary-purple;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(217, 70, 239, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(217, 70, 239, 1);
+  }
+}
 
 .voice-btn img,
 .send-btn img { height: 24px; width: 24px;}
