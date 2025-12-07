@@ -104,7 +104,7 @@ function LogIn() {
               onChange={handleChange}
               onKeyPress={handleKeyPress}
               className="pixel-input"
-              autoComplete="email"
+              autoComplete="off"
               disabled={isLoading}
             />
           </div>
@@ -118,7 +118,7 @@ function LogIn() {
               onChange={handleChange}
               onKeyPress={handleKeyPress}
               className="pixel-input"
-              autoComplete="current-password"
+              autoComplete="off"
               disabled={isLoading}
             />
           </div>
