@@ -41,7 +41,7 @@ npm start
 
 2. Install backend dependencies:
 ```bash
-cd deautchBanck
+cd backend
 npm install
 npm run dev
 ```
